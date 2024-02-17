@@ -1896,7 +1896,7 @@ class Mission:
             "night": timedelta(minutes=random.randrange(-120, 240)),
             "dusk": timedelta(minutes=random.randrange(960, 1100)),
             "dawn": timedelta(minutes=random.randrange(240, 480)),
-            "noon": timedelta(hours=random.randrange(600, 840))
+            "noon": timedelta(minutes=random.randrange(600, 840))
         }
         if period == "random":
             period = random.choice(list(daytime_map.keys()))
