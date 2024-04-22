@@ -1344,3 +1344,23 @@ class BasicTests(unittest.TestCase):
 
         no_unit = m.find_unit(non_existing_unit_name, red_coalition)
         self.assertIsNone(no_unit)
+
+    def test_geffect(self) -> None:
+        m = Mission()
+        m.load_file("tests/missions/g-effect-uncheked.miz")
+        self.assertIsNone(m.forced_options.geffect)
+
+        m.load_file("tests/missions/g-effect-none.miz")
+        self.assertEqual(m.forced_options.geffect, ForcedOptions.GEffect.None_)
+
+        m.load_file("tests/missions/g-effect-game.miz")
+        self.assertEqual(m.forced_options.geffect, ForcedOptions.GEffect.Game)
+
+        m.load_file("tests/missions/g-effect-sim.miz")
+        self.assertEqual(m.forced_options.geffect, ForcedOptions.GEffect.Realistic)
+
+        m.save("missions/saved.g-effect-sim.miz")
+
+        m2 = Mission()
+        m2.load_file("missions/saved.g-effect-sim.miz")
+        self.assertEqual(m.forced_options.geffect, m2.forced_options.geffect)
