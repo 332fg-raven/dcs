@@ -2467,6 +2467,13 @@ class OptJettisonEmptyTanks(Option):
         super(OptJettisonEmptyTanks, self).__init__(value)
 
 
+class OptMinAltRestriction(Option):
+    Key = 27
+
+    def __init__(self, value: float = 243.84) -> None:
+        super(OptMinAltRestriction, self).__init__(value)
+
+
 class OptRestrictTargets(Option):
     Key = 28
 
@@ -2502,5 +2509,6 @@ options: Dict[int, Type[Option]] = {
     OptRadioUsageEngage.Key: OptRadioUsageEngage,
     OptRadioUsageKill.Key: OptRadioUsageKill,
     OptInterceptionRange.Key: OptInterceptionRange,
-    OptRestrictTargets.Key: OptRestrictTargets
+    OptMinAltRestriction.Key: OptMinAltRestriction,
+    OptRestrictTargets.Key: OptRestrictTargets,
 }
