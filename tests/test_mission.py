@@ -1418,3 +1418,20 @@ class BasicTests(unittest.TestCase):
         self.assertIn(Coalition.Blue.value,
                       m2.groundControl.dict()["passwords"][GroundControlRole.OBSERVER.value])
         self.assertIn(Coalition.Red.value, m2.groundControl.dict()["passwords"][GroundControlRole.JTAC.value])
+
+    def test_payload_restrictions(self) -> None:
+        m = Mission()
+        m.load_file("tests/missions/payload.restrictions.miz")
+
+        country_name = "USA"
+        coal_name = str(dcs.action.Coalition.Blue.value)
+
+        self.assertIsNotNone(m.coalition[coal_name].country(country_name).plane_group[0].units[0].payload_restricted)
+
+        m.save("missions/saved.payload.restrictions.miz")
+
+        m2 = Mission()
+        m2.load_file("missions/saved.payload.restrictions.miz")
+
+        self.assertDictEqual(m.coalition[coal_name].country(country_name).plane_group[0].units[0].payload_restricted,
+                             m2.coalition[coal_name].country(country_name).plane_group[0].units[0].payload_restricted)
