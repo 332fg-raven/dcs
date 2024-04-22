@@ -12,14 +12,39 @@ from dcs.point import MovingPoint, StaticPoint
 from dcs.country import Country
 from dcs.status_message import StatusMessage, MessageType, MessageSeverity
 from dcs.unitgroup import Group
+from enum import IntEnum
 
 if TYPE_CHECKING:
     from . import Mission
 
 
+class CoalitionId(IntEnum):
+    # Mapping taken from DCS's coalition object.
+    # if it can be somehow generated it would be nice.
+    #
+    #    coalition.side.red=1
+    #    coalition.side.blue=2
+    #    coalition.side.neutrals=0
+
+    NEUTRAL = 0
+    RED = 1
+    BLUE = 2
+
+
 class Coalition:
+
     def __init__(self, name, bullseye=None):
         self.name = name
+
+        if name.lower() == "blue":
+            self.id = CoalitionId.BLUE
+        elif name.lower() == "red":
+            self.id = CoalitionId.RED
+        elif name.lower() == "neutral" or name.lower() == "neutrals":
+            self.id = CoalitionId.NEUTRAL
+        else:
+            raise ValueError("Unsupported coalition name.")
+
         self.countries: Dict[str, Country] = {}
         self.bullseye = bullseye
         self.nav_points = []  # TODO
